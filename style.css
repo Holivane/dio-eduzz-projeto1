@@ -1,0 +1,24 @@
+body{
+    margin: 0;
+    background-color: rgba(212, 191, 231, 0.795);
+}
+
+.main-game {
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.jogo-memoria {
+    display: grid;
+    grid-template-areas: 'red green' 'yellow blue';
+    grid-gap: 10px;
+    border: 1px solid #ffffff;
+    background-color: #ffffff;
+    border-radius: 50%;
+    margin-top: 15%;
+    width: 600px;
+    height: 600px;
+}
