@@ -13,7 +13,7 @@ body{
 
 .jogo-memoria {
     display: grid;
-    grid-template-areas: 'red green' 'yellow blue';
+    grid-template-areas: 'vermelho verde' 'azul amarelo';
     grid-gap: 10px;
     border: 1px solid #ffffff;
     background-color: #ffffff;
@@ -21,4 +21,32 @@ body{
     margin-top: 15%;
     width: 600px;
     height: 600px;
+}
+
+.blue {
+    grid-area: 'azul';
+    background-color: rgb(0, 102, 224);
+    border-top-left-radius: 100%;
+}
+
+.red {
+    grid-area: 'vermelho';
+    background-color: rgb(245, 99, 99);
+    border-top-right-radius: 100%;
+}
+
+.yellow {
+    grid-area: 'amarelo';
+    background-color: rgb(240, 240, 135);
+    border-bottom-right-radius: 100%;
+}
+
+.green {
+    grid-area: 'verde';
+    background-color: rgb(90, 207, 90);
+    border-bottom-left-radius: 100%;
+}
+
+.selected {
+    opacity: 0.8;
 }
