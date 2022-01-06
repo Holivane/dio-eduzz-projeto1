@@ -47,13 +47,19 @@ let checkOrder = () => {
     }
 
     if (clickerOrder.length == order.length) {
-        alert(`Pontuação: ${score} \n Você acertou! Iniciando próximo nível!`);
+        alert(`Pontuação: ${score} \n Parabéns! Você acertou.\n Iniciando próximo nível!`);
         nextLevel();
     }
 }
 
-// função para clique do usuário
+// função de clique do usuário
 let click = (color) => {
     clickerOrder[clickerOrder.length] = color;
-    elementColor(color).classList.add('selected')
+    creatColorElement(color).classList.add('selected');
+
+    setTimeout(() => {
+        creatColorElement(color).classList.remove('selected');
+    })
+
+    checkOrder();
 }
