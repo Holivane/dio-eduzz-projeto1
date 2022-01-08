@@ -25,7 +25,7 @@ body{
     grid-gap: 20px;
     border: 20px solid #3f3333;
     background-color: #3f3333;
-    border-radius: 50%;
+    border-radius: 100%;
     width: 600px;
     height: 600px;
 }
@@ -65,7 +65,7 @@ body{
     height: 250px;
     border-radius: 50%;
     text-align: center;
-    border: 20px solid #3f3333;
+    border: 15px solid #3f3333;
 }
 
 .game-title {
@@ -84,6 +84,15 @@ body{
 
 .group {
     margin: 10px 20px;
+}
+
+.gui-obs{
+    font-family: "Arima Madurai", cursive;
+    font-weight: bold;
+    font-size: 10px;
+    text-align: right;
+    text-transform: uppercase;
+    margin: 0;
 }
 
 .gui-label{

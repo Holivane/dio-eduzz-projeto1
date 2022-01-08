@@ -1,15 +1,28 @@
 // Jogo da memória
+
+// Variáveis referentes ao jogo
 let order = [];
 let clickerOrder = [];
 let score = 0;
+let iniciar = false;
 
-/* 
+/* ordem:
 0 - verde
 1 - vermelho
 2 - amarelo
-3 - azul 
-*/
+3 - azul */
 
+// Elementos HTML
+const gui = {
+    counter: document.querySelector('.gui-counter'),
+    start: document.querySelector('.gui-btn--start')
+}
+
+// iniciar jogo
+gui.start.addEventListener("click", () => { })
+
+
+// seleção de cores
 const green = document.querySelector('.green');
 const red = document.querySelector('.red');
 const yellow = document.querySelector('.yellow');
