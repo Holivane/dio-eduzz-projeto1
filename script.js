@@ -1,3 +1,4 @@
+// Jogo da memória
 let order = [];
 let clickerOrder = [];
 let score = 0;
@@ -41,7 +42,7 @@ let lightColor = (element, number) => {
 let checkOrder = () => {
     for (let i in clickerOrder) {
         if (clickerOrder[i] != order[i]) {
-            lose();
+            gameOver();
             break;
         }
     }
@@ -59,7 +60,51 @@ let click = (color) => {
 
     setTimeout(() => {
         creatColorElement(color).classList.remove('selected');
-    })
-
-    checkOrder();
+        checkOrder();
+    }, 2500)
 }
+
+// função que retorna a cor
+let creatColorElement = (color) => {
+    if (color == 0) {
+        return green
+    } else if (color == 1) {
+        return red
+    } else if (color == 2) {
+        return yellow
+    } else if (color == 3) {
+        return blue
+    }
+}
+
+// função para próximo nível
+let nextLevel = () => {
+    score++;
+    shuffleOrder();
+}
+
+// função para fim de jogo
+let gameOver = () => {
+    alert(`Pontuação: ${score} \n Que pena! Você perdeu. \n Clique em OK para iniciar novo jogo.`);
+    order = [];
+    clickerOrder = [];
+
+    playGame();
+}
+
+// função para iniciar jogo
+let playGame = () => {
+    //alert('Como está sua memória? Vamos começar!')
+    score = 0;
+
+    nextLevel();
+}
+
+// eventos de cliques
+green.onclick = () => click(0);
+red.onclick = () => click(1);
+yellow.onclick = () => click(2);
+blue.onclick = () => click(3);
+
+//início do jogo
+//playGame();
