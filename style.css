@@ -1,18 +1,18 @@
 body{
     margin: 0;
-    background-color: rgba(212, 191, 231, 0.795);
+    background-color: #f7f8fa;
 }
 
 .titulo{
     text-align: center;
     font-size: 40px;
-    font-family: 'Lucida Sans', cursive;
-    margin: 0;
-    padding: 10 px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-weight: bold;
+    margin: 20px 0;
 }
 
 .main-game {
-    height: 100vh;
+    height: 70vh;
     width: 100vw;
     display: flex;
     justify-content: center;
@@ -26,8 +26,10 @@ body{
     border: 20px solid #3f3333;
     background-color: #3f3333;
     border-radius: 100%;
-    width: 600px;
-    height: 600px;
+    width: 527.97px;
+    height: 527.97px;
+    left: 536.01px;
+    top: 247.02px;
 }
 
 .blue {
@@ -72,8 +74,7 @@ body{
     font-size: 40px;
     text-transform: uppercase;
     margin: 0;
-    padding-top: 40px;
-    font-family: 'Lucida Sans', cursive;
+    padding: 40px 0 15px 0;
 }
 
 .gui {
@@ -83,20 +84,31 @@ body{
 }
 
 .group {
-    margin: 10px 20px;
+    margin: 0px 20px;
 }
 
 .gui-obs{
-    font-family: "Arima Madurai", cursive;
-    font-weight: bold;
-    font-size: 10px;
-    text-align: right;
-    text-transform: uppercase;
-    margin: 0;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    background: #E3E8EA;
+    border-radius: 8px;
+    align-items: center;
+    width: 295.97px;
+    height: 55.79px;
+    font-size: 16px;    
+    color: #6C7577;
+    display: flex;
+    margin: auto;
+}
+
+p{
+    margin: auto 0;
+}
+
+.img{
+    padding: 15px;
 }
 
 .gui-label{
-    font-family: "Arima Madurai", cursive;
     font-weight: bold;
     font-size: 18px;
     text-align: center;
@@ -110,7 +122,7 @@ body{
     box-shadow: 0px 3px 3px rgba(26, 25, 25, 0.295);
     border: 5px solid #444;
     cursor: pointer;
-    margin: 0 0;
+    margin: 10px;
 }
 
 .gui-btn:active{
@@ -131,7 +143,7 @@ body{
     text-align: right;
     width: 70px;
     height: 50px;
-    border-radius: 20%;
+    border-radius: 15px;
     padding-right: 8px;
     padding-left: 6px;
 }
