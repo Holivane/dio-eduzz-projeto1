@@ -1,10 +1,13 @@
 // Jogo da memória
 
 // Variáveis referentes ao jogo
-let order = [];
-let clickerOrder = [];
-let score = 0;
-let iniciar = false;
+const data = {
+    playerCanPlay: false,
+    score: 0,
+    order: [],
+    clickerOrder: []
+}
+
 
 /* ordem:
 0 - verde
@@ -15,115 +18,117 @@ let iniciar = false;
 // Elementos HTML
 const gui = {
     counter: document.querySelector('.gui-counter'),
-    start: document.querySelector('.gui-btn--start')
+    start: document.querySelector('.gui-btn--start'),
+    pads: document.querySelectorAll('.game-pad')
 }
 
 // iniciar jogo
-gui.start.addEventListener("click", () => { 
+gui.start.addEventListener("click", () => {
+
+    gui.counter.classList.toggle('gui-counter--on');
     gui.counter.innerHTML = "--";
-    data.playerCanPlay = false;
+
+    data.playerCanPlay = false
     data.score = 0;
     data.order = [];
     data.clickerOrder = [];
+
+    disablePads();
+    startGame();
 });
 
-
-// seleção de cores
-const green = document.querySelector('.green');
-const red = document.querySelector('.red');
-const yellow = document.querySelector('.yellow');
-const blue = document.querySelector('.blue');
-
-// função para sortear números entre 0 e 3
-let shuffleOrder = () => {
-    let colorOrder = Math.floor(Math.random() * 4);
-    order[order.length] = colorOrder;
-    clickerOrder = [];
-
-    for (let i in order) {
-        let elementColor = creatColorElement(order[i]);
-        lightColor(elementColor, Number(i) + 1)
-    }
+// função que mostra a pontuação
+const setScore = () => {
+    const score = data.score.toString();
+    const display = "00".substring(0, 2 - score.length) + score;
+    gui.counter.innerHTML = display;
 }
 
-// função para acender as cores
-let lightColor = (element, number) => {
-    number = number * 500;
-    setTimeout(() => {
-        element.classList.add('selected')
-    }, number - 250);
-    setTimeout(() => {
-        element.classList.remove('selected')
-    });
+// sorteio de cores
+const newColor = () => {
+    data.order.push(Math.floor(Math.random() * 4));
+    data.score++;
+
+    setScore();
 }
 
-// comparação da ordem gerada e clicada
-let checkOrder = () => {
-    for (let i in clickerOrder) {
-        if (clickerOrder[i] != order[i]) {
-            gameOver();
-            break;
+// função para mostrar as cores sorteadas
+const playSequence = () => {
+    let counter = 0,
+        padOn = true;
+
+     data.clickerOrder = [];
+     data.playerCanPlay = false;
+
+     const interval = setInterval(() => {
+        if(padOn){
+             if(counter === data.order.length){
+                 clearInterval(interval);
+                 disablePads();
+                 waitForPlayerClick();
+                 data.playerCanPlay = true;
+                 return;
+             }
+
+             const sndId = data.order[counter];
+             const pad = gui.pads[sndId];
+
+             pad.classList.add('game-pad--active');
+             counter++;
+         } else {
+             disablePads();
+         }
+
+         padOn = !padOn
+
+     }, 750);
+}
+
+// função para o botão start
+const startGame = () => {
+    blink('--', () => {
+        newColor();
+        playSequence();
+    })
+}
+
+const waitForPlayerClick = () =>{
+    clearTimeout(data.timeout);
+
+    data.timeout = setTimeout(() => {
+        if(!data.playerCanPlay)
+            return;
+
+        disablePads();
+        playSequence();        
+    }, 5000);
+}
+
+const blink = (text, callback) => {
+    let counter = 0,
+        on = true;
+
+    gui.counter.innerHTML = text;
+
+    const interval = setInterval(() => {
+        if (on) {
+            gui.counter.classList.remove("gui-counter--on")
+        } else {
+            gui.counter.classList.add("gui-counter--on");
+            if (++counter === 2) {
+                clearInterval(interval);
+                callback();
+            }
         }
-    }
 
-    if (clickerOrder.length == order.length) {
-        alert(`Pontuação: ${score} \n Parabéns! Você acertou.\n Iniciando próximo nível!`);
-        nextLevel();
-    }
+        on = !on;
+
+    }, 250);
 }
 
-// função de clique do usuário
-let click = (color) => {
-    clickerOrder[clickerOrder.length] = color;
-    creatColorElement(color).classList.add('selected');
-
-    setTimeout(() => {
-        creatColorElement(color).classList.remove('selected');
-        checkOrder();
-    }, 2500)
+// desabilitar as cores que foram selecionadas
+const disablePads = () => {
+    gui.pads.forEach(pad => {
+        pad.classList.remove("game-pad--active")
+    })
 }
-
-// função que retorna a cor
-let creatColorElement = (color) => {
-    if (color == 0) {
-        return green
-    } else if (color == 1) {
-        return red
-    } else if (color == 2) {
-        return yellow
-    } else if (color == 3) {
-        return blue
-    }
-}
-
-// função para próximo nível
-let nextLevel = () => {
-    score++;
-    shuffleOrder();
-}
-
-// função para fim de jogo
-let gameOver = () => {
-    alert(`Pontuação: ${score} \n Que pena! Você perdeu. \n Clique em OK para iniciar novo jogo.`);
-    order = [];
-    clickerOrder = [];
-
-    playGame();
-}
-
-// função para iniciar jogo
-let playGame = () => {
-    //alert('Como está sua memória? Vamos começar!')
-    score = 0;
-
-    nextLevel();
-}
-
-// eventos de cliques
-green.onclick = () => click(0);
-red.onclick = () => click(1);
-yellow.onclick = () => click(2);
-blue.onclick = () => click(3);
-
-//início do jogo
-//playGame();
