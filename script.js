@@ -19,7 +19,13 @@ const gui = {
 }
 
 // iniciar jogo
-gui.start.addEventListener("click", () => { })
+gui.start.addEventListener("click", () => { 
+    gui.counter.innerHTML = "--";
+    data.playerCanPlay = false;
+    data.score = 0;
+    data.order = [];
+    data.clickerOrder = [];
+});
 
 
 // seleção de cores
