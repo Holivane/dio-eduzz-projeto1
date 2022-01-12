@@ -2,9 +2,10 @@
 
 // Variáveis referentes ao jogo
 const data = {
+    timeout: undefined,
     playerCanPlay: false,
     score: 0,
-    order: [],
+    gameSequence: [],
     clickerOrder: []
 }
 
@@ -30,7 +31,7 @@ gui.start.addEventListener("click", () => {
 
     data.playerCanPlay = false
     data.score = 0;
-    data.order = [];
+    data.gameSequence = [];
     data.clickerOrder = [];
 
     disablePads();
@@ -46,7 +47,7 @@ const setScore = () => {
 
 // sorteio de cores
 const newColor = () => {
-    data.order.push(Math.floor(Math.random() * 4));
+    data.gameSequence.push(Math.floor(Math.random() * 4));
     data.score++;
 
     setScore();
@@ -57,32 +58,59 @@ const playSequence = () => {
     let counter = 0,
         padOn = true;
 
-     data.clickerOrder = [];
-     data.playerCanPlay = false;
+    data.clickerOrder = [];
+    data.playerCanPlay = false;
 
-     const interval = setInterval(() => {
-        if(padOn){
-             if(counter === data.order.length){
-                 clearInterval(interval);
-                 disablePads();
-                 waitForPlayerClick();
-                 data.playerCanPlay = true;
-                 return;
-             }
+    const interval = setInterval(() => {
+        if (padOn) {
+            if (counter === data.gameSequence.length) {
+                clearInterval(interval);
+                disablePads();
+                waitForPlayerClick();
+                data.playerCanPlay = true;
+                return;
+            }
 
-             const sndId = data.order[counter];
-             const pad = gui.pads[sndId];
+            const sndId = data.gameSequence[counter];
+            const pad = gui.pads[sndId];
 
-             pad.classList.add('game-pad--active');
-             counter++;
-         } else {
-             disablePads();
-         }
+            pad.classList.add('game-pad--active');
+            counter++;
+        } else {
+            disablePads();
+        }
 
-         padOn = !padOn
+        padOn = !padOn;
 
-     }, 750);
+    }, 750);
 }
+
+
+// função para o usuário jogar
+const padListner = (e) =>{
+    if(!data.playerCanPlay)
+        return;
+
+    let soundId;
+    gui.pads.forEach((pad, key) => {
+        if(pad === e.target)
+            soundId = key;
+    });
+
+    e.target.classList.add("game-pad--active")
+
+    data.sounds[soundId].play();
+    data.clickerOrder.push(soundId);
+
+    e.target.classList.remove("game-pad--active");
+    
+    const currentMove = data.clickerOrder.length -1;
+}
+
+// função para escutar o click
+gui.pads.forEach(pad => {
+    pad.addEventListener('click', padListner);
+})
 
 // função para o botão start
 const startGame = () => {
@@ -92,18 +120,19 @@ const startGame = () => {
     })
 }
 
-const waitForPlayerClick = () =>{
+const waitForPlayerClick = () => {
     clearTimeout(data.timeout);
 
     data.timeout = setTimeout(() => {
-        if(!data.playerCanPlay)
+        if (!data.playerCanPlay)
             return;
 
         disablePads();
-        playSequence();        
+        playSequence();
     }, 5000);
 }
 
+// função para piscar o contado ao startar o jogo
 const blink = (text, callback) => {
     let counter = 0,
         on = true;
@@ -122,7 +151,6 @@ const blink = (text, callback) => {
         }
 
         on = !on;
-
     }, 250);
 }
 
